@@ -1,0 +1,173 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+
+fieldset {
+    border: 1px solid #D1D1D1;
+    border-radius: 4px;
+}
+
+fieldset, legend {
+    margin-left: 2%;
+    margin-bottom: 3%;
+}
+
+html, body, #map {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 400;
+    height: 100%;
+}
+
+html, body, h2 {
+    font-weight: 400;
+}
+
+span.modal-icon {
+    font-size: 0.8em;
+}
+
+div.title-control {
+    font-family: 'Garamond', Times, serif;
+    font-weight: 700;
+    font-size: 12pt;
+}
+
+div.flight-leg {
+    font-weight: 700;
+    font-size: 1.2em;
+}
+
+div.map-text {
+    text-align: center;
+    height: unset !important;
+    width: unset !important;
+    color: #ffffff;
+    background: rgba(100, 100, 100, .5);
+    padding: 0 5px;
+}
+
+div.map-text.inverted {
+    color: #000000;
+}
+
+div.map-text:hover,
+div.map-text.inverted:hover {
+    color: #1B4FB1;
+}
+
+div.map-text.nobg {
+    background: unset !important;
+}
+
+div.button-row {
+    margin-top: 5%;
+}
+
+div.map-title {
+    font-family: 'Courier', Courier, monospace;
+    font-weight: 700;
+    font-size: 1.3em;
+    text-align: center;
+}
+
+div.flight-title {
+    font-size: 1.5em;
+}
+
+div.target-title {
+    margin-left: 18px !important;
+    font-size: 1.3em;
+}
+
+h3.help-header {
+    font-size: 2.0rem;
+    text-align: right;
+}
+
+.half-width {
+    width: 50%;
+}
+
+.bold {
+    font-weight: 700;
+}
+
+a.streaming {
+    color: green;
+}
+
+a.streaming:hover {
+    color: green;
+}
+
+a.connected {
+    color: blue;
+}
+
+a.connected:hover {
+    color: blue;
+}
+
+a.stream-error {
+    color: #9A070B;
+}
+
+a.stream-error:hover {
+    color: #9A070B;
+}
+
+div.error-message {
+    display: block;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-left: 5px solid #9A070B;
+    background-color: #FEE7E7;
+    color: #9A070B;
+}
+
+div.hidden-section {
+    display: none;
+}
+
+label.checkbox-label {
+    font-weight: 400;
+}
+
+button.button-primary {
+    background-color: #9A070B;
+    border-color: #9A070B;
+}
+
+button.button-primary:hover,
+button.button-primary:focus {
+    background-color: #DB0A11;
+    border-color: #DB0A11;
+}
+
+img.modal-image {
+    max-height: 100%;
+    max-width: 100% !important;
+}
+
+#point-type-select {
+    margin-left: 0%;
+}
+
+#already-streaming-hidden {
+    margin-top: 14px;
+}
+
+@media(max-width: 1600px) {
+
+    div.flight-leg {
+        font-size: 1.0em;
+    }
+
+}
+
+@media(max-width: 400px) {
+    div.title-control {
+        max-width: 260px;
+    }
+}

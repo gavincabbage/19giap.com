@@ -1,0 +1,14 @@
+{
+  "name": "il2missionplanner.com",
+  "homepage": "https://github.com/gavincabbage/19giap.com",
+  "authors": [
+    "Gavin Cabbage <gavincabbage@gmail.com>"
+  ],
+  "description": "19th Guards Fighter Aviation Regiment Website",
+  "main": "index.html",
+  "moduleType": [],
+  "license": "MIT",
+  "dependencies": {
+    "validatinator": "^1.3.3"
+  }
+}

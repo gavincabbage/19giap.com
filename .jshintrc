@@ -1,0 +1,13 @@
+{
+    "esversion": 6,
+    "curly": true,
+    "eqeqeq": true,
+    "freeze": true,
+    "funcscope": true,
+    "shadow": true,
+    "undef": true,
+    "multistr": true,
+    "globals": {
+        "Validatinator": true
+    }
+}
