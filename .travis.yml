@@ -1,9 +1,9 @@
 language: node_js
 node_js: 5.3.0
 before_script:
-- bower install
+  - bower install
 script:
-- npm run dist
+  - npm run dist
 deploy:
   - provider: s3
     access_key_id: AKIAJ525XHHSGQDXB5OA
@@ -20,7 +20,7 @@ deploy:
     secret_access_key:
       secure: hvLiWn5beojzj5a/s2QZqvap/5m+kohu8Hn5nx7i3HWDrlNBW9p18xsDPZN+Tl8dCcffvZAAXJTgmGq4GI+HJ4gvTI2PgQH+m0zcQdv5+mmtvb5uSCuAJZntB0RSoTRLK3O+7d4MvYQcP2MJIzzPiBNIWfOl3sdezeaNUeMPSMXSGBIqrr2rEp48M15/jRipaHOvISSRYEkrZ78Uxy+BFkLswbLjRdbGBI+J7EGK/4+xVEyL6shkJe+jj5gA/MJDcoJTfhrJRjmwG1NjIdfOBuONlgQThXwslbhAXa0PcecmGvji/42rnKj8TCGGKXpuOV9RPnD2XdzS8YgMMjWWgwj07M/HHF+F48ln8j8r1695Tu1aaFZeJkyWArH0O/Y6YJfI67UVP2trLrRx/VDVT9n2ajO4oFf9Jval8qPbNslBbdmMxYmISVYXGgLdCH7XiZsXf7r3N8DwCDsmcIv1JG+DOMgucjR2+VknsKZRku2ZQ5+Fznr9e6fofY6f3AOmx70uul3GX4O+2eawagwqyn0kJTtUOWGVsYVgPUvTDpZET/z9Eo6S8H8L9tBAyAK7EsC6UqK97xZ3f8wlKgtB7E8ObeabzZvh78Kgn6Gp5X2gximOq13i+WBAxst5PY20OjwVDn4gCy5YDyQBY2FFoFmS0twlA78VNdvLP1vINZw=
     bucket: 19giap.gavincabbage.com
-  local-dir: dist
+    local-dir: dist
     acl: public_read
     on:
       repo: gavincabbage/19giap.com
