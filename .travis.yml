@@ -12,6 +12,7 @@ deploy:
     bucket: dev.19giap.gavincabbage.com
     local-dir: dist
     acl: public_read
+    skip_cleanup: true
     on:
       repo: gavincabbage/19giap.com
       branch: develop
@@ -22,6 +23,7 @@ deploy:
     bucket: 19giap.gavincabbage.com
     local-dir: dist
     acl: public_read
+    skip_cleanup: true
     on:
       repo: gavincabbage/19giap.com
       branch: master
