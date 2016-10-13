@@ -8,5 +8,6 @@
     "undef": true,
     "multistr": true,
     "globals": {
+        "console": true
     }
 }
