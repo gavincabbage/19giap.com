@@ -1,18 +1,18 @@
 {
-  "name": "il2missionplanner.com",
+  "name": "19giap.com",
   "version": "1.0.0",
   "description": "Il-2 Mission Planner",
   "main": "index.html",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gavincabbage/il2missionplanner.com.git"
+    "url": "git+https://github.com/gavincabbage/19giap.com.git"
   },
   "author": "Gavin Cabbage <gavincabbage@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/gavincabbage/il2missionplanner.com/issues"
+    "url": "https://github.com/gavincabbage/19giap.com/issues"
   },
-  "homepage": "https://github.com/gavincabbage/il2missionplanner.com#readme",
+  "homepage": "https://github.com/gavincabbage/19giap.com#readme",
   "devDependencies": {
     "brfs": "^1.4.3",
     "bower": "^1.7.7",

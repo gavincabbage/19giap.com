@@ -8,6 +8,5 @@
     "undef": true,
     "multistr": true,
     "globals": {
-        "Validatinator": true
     }
 }
