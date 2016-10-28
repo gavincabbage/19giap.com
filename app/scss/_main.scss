@@ -1,0 +1,56 @@
+@import 'colors';
+
+body {
+    background: $darkGray;
+}
+
+div#header {
+
+    background: $red;
+    padding: 0 20px;
+
+    input.login-form {
+        width: 100%;
+    }
+
+    a.login-button {
+        color: $gray;
+        border-color: $gray;
+        width: 100%;
+        &:hover {
+            background-color: $paleRed;
+        }
+    }
+
+    h1.main-title {
+        color: $darkGray;
+        text-align: center;
+        padding-top: 20px;
+    }
+}
+
+/* Larger than mobile */
+@media (min-width: 400px) {}
+
+/* Larger than phablet */
+@media (min-width: 550px) {
+
+    div#header {
+
+        input.login-form {
+        }
+
+        a.login-button {
+            text-align: center;
+        }
+    }
+}
+
+/* Larger than tablet */
+@media (min-width: 750px) {}
+
+/* Larger than desktop */
+@media (min-width: 1000px) {}
+
+/* Larger than Desktop HD */
+@media (min-width: 1200px) {}

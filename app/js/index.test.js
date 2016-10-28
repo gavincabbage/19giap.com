@@ -1,11 +1,13 @@
 var assert = require('chai').assert;
+var mocks = require('./mocks.js');
 
 var index;
 
 describe('index', function() {
 
     before(function () {
-        global.firebase = mockFirebase();
+        global.firebase = mocks.mockFirebase();
+        global.document = mocks.mockDocument();
         index = require('./index.js');
     });
 
@@ -14,9 +16,3 @@ describe('index', function() {
     });
 
 });
-
-function mockFirebase() {
-    return {
-        initializeApp: function() {}
-    }
-}

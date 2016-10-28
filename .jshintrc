@@ -9,6 +9,10 @@
     "multistr": true,
     "globals": {
         "console": true,
-        "firebase": true
+        "firebase": true,
+        "document": true,
+        "require": true,
+        "module": true,
+        "mockElement": true
     }
 }
