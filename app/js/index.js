@@ -1,5 +1,7 @@
 (function() {
 
+    require('../bower_components/navigo/lib/navigo.min.js');
+
     var firebaseConfig = {
         apiKey: "AIzaSyBvWg_JPft53Qn_-FaSpim-P9tNnjzJeus",
         authDomain: "giap-80ec2.firebaseapp.com",

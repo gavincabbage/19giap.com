@@ -1,5 +1,5 @@
 .DS_Store
-app/vendor/bower_components/
+app/bower_components/
 node_modules/
 dist/
 coverage/
