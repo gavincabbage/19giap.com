@@ -9,7 +9,6 @@
   "moduleType": [],
   "license": "MIT",
   "dependencies": {
-    "navigo": "^3.0.0",
-    "skeleton": "skeleton-css#^2.0.4"
+    "skeleton": "^2.0.4"
   }
 }

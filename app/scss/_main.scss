@@ -4,28 +4,39 @@ body {
     background: $darkGray;
 }
 
-div#header {
+div {
 
-    background: $red;
-    padding: 0 20px;
-
-    input.login-form {
-        width: 100%;
+    &.page-visible {
+        display: block;
     }
 
-    a.login-button {
-        color: $gray;
-        border-color: $gray;
-        width: 100%;
-        &:hover {
-            background-color: $paleRed;
+    &.page-hidden {
+        display: none;
+    }
+
+    &#header {
+
+        background: $red;
+        padding: 0 20px;
+
+        input.login-form {
+            width: 100%;
         }
-    }
 
-    h1.main-title {
-        color: $darkGray;
-        text-align: center;
-        padding-top: 20px;
+        a.login-button {
+            color: $gray;
+            border-color: $gray;
+            width: 100%;
+            &:hover {
+                background-color: $paleRed;
+            }
+        }
+
+        h1.main-title {
+            color: $darkGray;
+            text-align: center;
+            padding-top: 20px;
+        }
     }
 }
 

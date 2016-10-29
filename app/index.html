@@ -13,11 +13,10 @@
 
     <title>19.GIAP | 19th Guards Fighter Aviation Regiment</title>
 
-    <link rel="stylesheet" href="vendor/Skeleton/css/normalize.css" type="text/css">
-    <link rel="stylesheet" href="vendor/Skeleton/css/skeleton.css" type="text/css">
     <link rel="stylesheet" href="index.css" type="text/css">
 
     <script src="https://www.gstatic.com/firebasejs/3.5.2/firebase.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/path.js/0.8.4/path.min.js"></script>
 
 </head>
 
@@ -33,15 +32,21 @@
                 <input id="login-password" class="login-form" type="password" placeholder="password">
             </div>
             <div class="two columns">
-                    <a id="login-submit" class="button login-button" href="#">SUBMIT</a>
-                    <a id="login-register" class="button login-button" href="#">REGISTER</a>
+                    <a id="login-submit" class="button login-button">SUBMIT</a>
+                    <a id="login-register" class="button login-button">REGISTER</a>
             </div>
         </div>
-        <div id="main" class="row">
 
+        <div id="home" class="page-visible row">
+            This will be the homepage
         </div>
-        <div id="footer" class="row">
+        <div id="other" class="page-hidden row">
+            And another page
+        </div>
 
+        <div id="footer" class="row">
+            <a id="go-home" class="button">HOME</a>
+            <a id="go-other" class="button">OTHER</a>
         </div>
 
         <!--
