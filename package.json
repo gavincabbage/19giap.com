@@ -14,17 +14,10 @@
   },
   "homepage": "https://github.com/gavincabbage/19giap.com#readme",
   "devDependencies": {
-    "brfs": "^1.4.3",
-    "bower": "^1.7.7",
-    "browserify": "^13.0.0",
-    "chai": "^3.5.0",
-    "clean-css": "^3.4.12",
-    "istanbul": "^0.4.3",
-    "jshint": "^2.9.1",
-    "livereload": "^0.4.1",
-    "mocha": "^2.4.5",
-    "uglify-js": "^2.6.2",
-    "watch-run": "^1.2.4"
+      
+  },
+  "dependencies": {
+
   },
   "scripts": {
     "coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha app/js/**/*.test.js",
@@ -49,8 +42,5 @@
     "dist:css": "node-sass --output-style compressed app/scss/index.scss > dist/index.css",
     "nodist": "npm run lint && npm test",
     "reload": "livereload ./dist/"
-  },
-  "dependencies": {
-    "xhr-mock": "^1.6.0"
   }
 }

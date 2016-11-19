@@ -1,7 +1,19 @@
 language: node_js
-node_js: 5.3.0
+sudo: required
+dist: trusty
+addons:
+  firefox: '46.0'
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
+node_js:
+  - '6'
+  - '5'
+  - '4'
 before_script:
+  - npm install -g bower polymer-cli
   - bower install
 script:
-  - npm run lint
-  - npm run test
+  - xvfb-run polymer test

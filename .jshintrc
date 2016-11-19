@@ -8,12 +8,6 @@
     "undef": true,
     "multistr": true,
     "globals": {
-        "console": true,
-        "firebase": true,
-        "document": true,
-        "require": true,
-        "module": true,
-        "mockElement": true,
-        "Path": true
+        
     }
 }
