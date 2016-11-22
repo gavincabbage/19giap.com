@@ -1,0 +1,31 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<dom-module id="error-404">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px 20px;
+      }
+      p {
+        font-size: 12px;
+      }
+    </style>
+
+    <div class="card">
+      <p>
+        404 - Page Not Found.
+      </p>
+      <a href="/home" title="Head back home" tabindex="-1">
+        <paper-button class="form-button" id="back-home">Head back home.</paper-button>
+      </a>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'error-404'
+    });
+  </script>
+</dom-module>

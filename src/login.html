@@ -1,0 +1,71 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/gold-email-input/gold-email-input.html">
+
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="login-page">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px;
+      }
+    </style>
+
+    <firebase-auth
+      id="auth"
+      user="{{user}}"
+      signed-in="{{signedIn}}">
+    </firebase-auth>
+
+    <div class="card">
+      <h1>Sign In</h1>
+      <form name="login-form">
+        <gold-email-input auto-validate required label="email" value={{email}}></gold-email-input>
+        <paper-input required label="password" type="password" value={{password}}></paper-input>
+        <div id="login-buttons" class="form-button-group">
+          <paper-button class="form-button" id="login-submit">Login</paper-button>
+          <a class="float-right" name="register" href="/register" title="Register" tabindex="-1">
+            <paper-button class="form-button" id="login-register">Register</paper-button>
+          </a>
+        </div>
+      </form>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'login-page',
+
+      properties: {
+        email: String,
+        password: String,
+        user: {
+          type: Object,
+          notify: true
+        },
+        signedIn: {
+          type: Boolean,
+          notify: true
+        }
+      },
+
+      listeners: {
+        'login-submit.click': 'signIn'
+      },
+
+      signIn: function() {
+        console.log('clicked submit');
+        this.user = this.$.auth.signInWithEmailAndPassword(this.email, this.password)
+        .catch(function(error) {
+          console.log('sign in error');
+        });
+        console.log(this.user);
+      }
+    });
+
+
+  </script>
+</dom-module>

@@ -1,0 +1,71 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/gold-email-input/gold-email-input.html">
+
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="register-page">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px;
+      }
+    </style>
+
+    <firebase-auth
+      id="auth"
+      user="{{user}}"
+      signed-in="{{signedIn}}">
+    </firebase-auth>
+
+    <div class="card">
+      <h1>Register</h1>
+      <form name="register-form">
+        <paper-input required label="username" value={{username}}></paper-input>
+        <gold-email-input auto-validate required label="email" value={{email}}></gold-email-input>
+        <gold-email-input auto-validate required label="confirm email" value={{emailConfirm}}></gold-email-input>
+        <paper-input required label="password" type="password" value={{password}}></paper-input>
+        <paper-input required label="confirm password" type="password" value={{passwordConfirm}}></paper-input>
+        <div id="register-buttons" class="form-button-group">
+          <paper-button class="form-button" id="register-submit">Submit</paper-button>
+        </div>
+      </form>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'register-page',
+
+      properties: {
+        email: String,
+        password: String,
+        user: {
+          type: Object,
+          notify: true
+        },
+        signedIn: {
+          type: Boolean,
+          notify: true
+        }
+      },
+
+      listeners: {
+        'register-submit.click': 'register'
+      },
+
+      register: function() {
+        console.log('clicked submit');
+        this.user = this.$.auth.signInWithEmailAndPassword(this.email, this.password)
+        .catch(function(error) {
+          console.log('sign in error');
+        });
+        console.log(this.user);
+      }
+    });
+
+
+  </script>
+</dom-module>

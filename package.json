@@ -4,43 +4,26 @@
   "description": "Il-2 Mission Planner",
   "main": "index.html",
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/gavincabbage/19giap.com.git"
+      "type": "git",
+      "url": "git+https://github.com/gavincabbage/19giap.com.git"
   },
   "author": "Gavin Cabbage <gavincabbage@gmail.com>",
   "license": "MIT",
   "bugs": {
+
     "url": "https://github.com/gavincabbage/19giap.com/issues"
   },
   "homepage": "https://github.com/gavincabbage/19giap.com#readme",
   "devDependencies": {
-      
+
   },
   "dependencies": {
 
   },
   "scripts": {
-    "coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha app/js/**/*.test.js",
-    "uglify": "./node_modules/.bin/uglifyjs dist/index.tmp.js -o dist/index.js && rm dist/index.tmp.js",
-    "test": "mocha app/js/**/*.test.js",
-    "lint": "jshint app/js/**.js",
-    "clean": "rm -rf dist",
-    "browserify": "browserify -t brfs app/js/index.js -o dist/index.tmp.js",
-    "browserify:dev": "browserify -t brfs app/js/index.js -o dist/index.js -d",
-    "copy:img": "mkdir -p dist/img; cp app/img/* dist/img/",
-    "copy:html": "cp app/index.html dist/index.html",
-    "copy": "mkdir -p dist && npm run copy:html",
-    "dist:js:dev": "npm run lint && npm test && npm run browserify:dev",
-    "dist:js": "npm run lint && npm test && npm run browserify && npm run uglify",
-    "dist:dev": "npm run copy && npm run dist:js:dev && npm run dist:css && npm run copy:img",
-    "dist": "npm run copy && npm run dist:js && npm run dist:css && npm run copy:img",
-    "watch:scss": "watch-run -p 'app/scss/**/*.scss' npm run dist:css",
-    "watch:index": "watch-run -p 'app/index.html' npm run copy:html",
-    "watch:js": "watch-run -p 'app/js/**/*.js' npm run dist:js:dev",
-    "watch:img": "watch-run -p 'app/img/*' npm run copy:img",
-    "develop": "npm run clean && npm run dist:dev && concurrently \"npm run watch:scss\" \"npm run watch:index\" \"npm run watch:js\" \"npm run watch:img\" \"npm run reload\" \"firebase serve\"",
-    "dist:css": "node-sass --output-style compressed app/scss/index.scss > dist/index.css",
-    "nodist": "npm run lint && npm test",
-    "reload": "livereload ./dist/"
+      "serve": "polymer serve --open",
+      "livereload": "livereload",
+      "develop": "concurrently \"npm run serve\" \"npm run livereload\"",
+      "deploy": "polymer build && firebase deploy"
   }
 }
