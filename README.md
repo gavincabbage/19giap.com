@@ -1,3 +1,3 @@
 # 19giap.com
 
-19th Guards Fighter Aviation Division Website
+19th Guards Fighter Aviation Regiment Website

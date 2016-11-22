@@ -4,8 +4,8 @@
   <template>
     <style>
       .card {
-        margin: 16px;
-        padding: 12px;
+        margin: 24px;
+        padding: 16px;
 
         color: #757575;
         border-radius: 5px;
@@ -69,8 +69,18 @@
         float: right;
       }
 
-      .header-icon {
-        margin-top: 2px;
+      @media screen and (max-width: 768px) {
+        .card {
+          margin: 16px;
+          padding: 12px;
+        }
+      }
+
+      @media screen and (max-width: 414px) {
+        .card {
+          margin: 12px;
+          padding: 8px;
+        }
       }
     </style>
   </template>
