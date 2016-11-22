@@ -1,6 +1,11 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../bower_components/iron-a11y-keys/iron-a11y-keys.html">
 <link rel="import" href="../bower_components/gold-email-input/gold-email-input.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-app.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-document.html">
 
 <link rel="import" href="shared-styles.html">
 
@@ -20,9 +25,16 @@
       signed-in="{{signedIn}}">
     </firebase-auth>
 
+    <firebase-document
+      path="/users"
+      data="{{roster}}">
+    </firebase-document>
+
     <div class="card">
       <h1>Register</h1>
-      <form name="register-form">
+      <iron-a11y-keys id="register-a11y" target="[[_form]]" keys="enter"
+                  on-keys-pressed="registerNewUser"></iron-a11y-keys>
+      <form id="register-form" is="iron-form" name="register-form">
         <paper-input required label="username" value={{username}}></paper-input>
         <gold-email-input auto-validate required label="email" value={{email}}></gold-email-input>
         <gold-email-input auto-validate required label="confirm email" value={{emailConfirm}}></gold-email-input>
@@ -42,25 +54,45 @@
       properties: {
         email: String,
         password: String,
+        roster: {
+          type: Object,
+          observer: this.rosterChanged
+        },
         user: {
           type: Object,
           notify: true
         },
-        signedIn: {
-          type: Boolean,
-          notify: true
+        _form: {
+          type: Object,
+          value: function() {
+            return this.$.registerForm;
+          }
         }
       },
 
       listeners: {
-        'register-submit.click': 'register'
+        'register-submit.click': 'registerNewUser'
       },
 
-      register: function() {
-        console.log('clicked submit');
-        this.user = this.$.auth.signInWithEmailAndPassword(this.email, this.password)
+      rosterChanged: function(roster) {
+        console.log(roster);
+      },
+
+      registerNewUser: function() {
+        console.log('clicked register');
+
+        var error = null;
+        if (this.email != this.emailConfirm) {
+          error = 'Email addresses must match.'
+        } else if (this.password != this.passwordConfirm) {
+          error = 'Passwords must match.'
+        }
+
+        this.user = this.$.auth.createUserWithEmailAndPassword(this.email, this.password)
         .catch(function(error) {
-          console.log('sign in error');
+          console.log('registration error');
+          console.log(error);
+          return;
         });
         console.log(this.user);
       }

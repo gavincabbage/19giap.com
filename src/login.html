@@ -1,6 +1,10 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../bower_components/iron-a11y-keys/iron-a11y-keys.html">
 <link rel="import" href="../bower_components/gold-email-input/gold-email-input.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-app.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
 
 <link rel="import" href="shared-styles.html">
 
@@ -22,11 +26,13 @@
 
     <div class="card">
       <h1>Sign In</h1>
-      <form name="login-form">
-        <gold-email-input auto-validate required label="email" value={{email}}></gold-email-input>
-        <paper-input required label="password" type="password" value={{password}}></paper-input>
+      <iron-a11y-keys id="login-a11y" target="[[_form]]" keys="enter"
+                  on-keys-pressed="signIn"></iron-a11y-keys>
+      <form id="login-form" is="iron-form" name="login-form">
+        <gold-email-input name="email" auto-validate required label="email" value={{email}}></gold-email-input>
+        <paper-input name="password" label="password"  required type="password" value={{password}}></paper-input>
         <div id="login-buttons" class="form-button-group">
-          <paper-button class="form-button" id="login-submit">Login</paper-button>
+          <paper-button name="login-submit" type="submit" class="form-button" id="login-submit">Login</paper-button>
           <a class="float-right" name="register" href="/register" title="Register" tabindex="-1">
             <paper-button class="form-button" id="login-register">Register</paper-button>
           </a>
@@ -44,11 +50,19 @@
         password: String,
         user: {
           type: Object,
+          reflectToAttribute: true,
           notify: true
         },
         signedIn: {
           type: Boolean,
+          reflectToAttribute: true,
           notify: true
+        },
+        _form: {
+          type: Object,
+          value: function() {
+            return this.$.loginForm;
+          }
         }
       },
 
@@ -61,6 +75,7 @@
         this.user = this.$.auth.signInWithEmailAndPassword(this.email, this.password)
         .catch(function(error) {
           console.log('sign in error');
+          console.log(error);
         });
         console.log(this.user);
       }

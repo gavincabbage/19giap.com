@@ -1,0 +1,68 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-document.html">
+
+<dom-module id="roster-page">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px;
+      }
+    </style>
+
+    <app-route
+        route="{{route}}"
+        pattern="/:user"
+        data="{{routeData}}"
+        tail="{{subroute}}">
+    </app-route>
+
+    <firebase-document
+      path="/users"
+      data="{{roster}}">
+    </firebase-document>
+
+    <div class="card">
+      <h1>Roster</h1>
+      <template is="dom-repeat" items="[[flattenRoster(roster)]]">
+        <div>{{item}}
+        </div>
+      </template>
+      <!-- two elements here: roster-list and user-profile, show
+        one or the other based on presence of routeData.user -->
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'roster-page',
+
+      properties: {
+        route: {
+          type: String,
+          reflectToAttribute: true
+        }
+      },
+
+      flattenRoster: function(roster) {
+        console.log(roster);
+        var flat = [];
+        for (user in roster) {
+          console.log(user);
+          flat.push({
+            uid: user,
+            username: roster[user].username,
+            role: roster[user].role
+          });
+        }
+        return flat;
+        console.log(flat);
+      }
+
+
+
+    });
+  </script>
+</dom-module>
