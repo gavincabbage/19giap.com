@@ -3,6 +3,20 @@
 <dom-module id="shared-styles">
   <template>
     <style>
+      :host {
+        --app-primary-color: #9A070B;
+        --app-secondary-color: black;
+        --app-drawer-width: 180px;
+        display: block;
+      }
+      .serif {
+        font-family: 'Droid Serif', serif;
+      }
+
+      .mono {
+        font-family: 'Droid Sans Mono', monospace;
+      }
+
       .card {
         margin: 24px;
         padding: 16px;
@@ -45,10 +59,6 @@
         color: #757575;
       }
 
-      paper-button.form-button:hover {
-        text-decoration: underline;
-      }
-
       a:visited paper-button {
         color: #757575;
       }
@@ -65,8 +75,32 @@
         margin-top: 30px;
       }
 
+      .form-button {
+        padding: 3px 10px;
+        border: 1px solid #757575;
+        border-radius: 5px;
+      }
+
+      .form-button:hover {
+        background-color: #757575;
+        color: #fff;
+      }
+
       .float-right {
         float: right;
+      }
+
+      .form-block {
+        margin-bottom: 15px;
+      }
+
+      .form-input-desc {
+        font-size: 8pt;
+        width: 100%;
+      }
+
+      .form-error {
+        color: red;
       }
 
       @media screen and (max-width: 768px) {

@@ -1,6 +1,7 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="shared-styles.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-document.html">
+
+<link rel="import" href="shared-styles.html">
 
 <dom-module id="roster-page">
   <template>
@@ -20,14 +21,24 @@
     </app-route>
 
     <firebase-document
+      id="document"
+      app-name="19giap"
       path="/users"
       data="{{roster}}">
     </firebase-document>
 
+    <firebase-query
+      id="query"
+      app-name="19giap"
+      path="/users"
+      data="{{roster}}">
+    </firebase-query>
+
     <div class="card">
-      <h1>Roster</h1>
+      <h1 id="header">Roster</h1>
       <template is="dom-repeat" items="[[flattenRoster(roster)]]">
-        <div>{{item}}
+        <div class="card">
+          username: {{item.username}}
         </div>
       </template>
       <!-- two elements here: roster-list and user-profile, show
@@ -43,26 +54,36 @@
         route: {
           type: String,
           reflectToAttribute: true
+        },
+        roster: {
+          type: Object,
+          notify: true
         }
       },
 
       flattenRoster: function(roster) {
-        console.log(roster);
-        var flat = [];
-        for (user in roster) {
-          console.log(user);
-          flat.push({
-            uid: user,
-            username: roster[user].username,
-            role: roster[user].role
-          });
+          var flat = [];
+          for (user in roster) {
+            flat.push({
+              uid: user,
+              username: roster[user].username,
+              role: roster[user].role
+            });
+          }
+          return flat;
         }
-        return flat;
-        console.log(flat);
-      }
 
 
-
+      // ready: function() {
+      //   var app = firebase.app('19giap');
+      //   console.log(app);
+      //   var database = app.database();
+      //   var results = database.ref('/users')
+      //       .once('value')
+      //       .then(function(snapshot) {
+      //         console.log(snapshot.val());
+      //       });
+      // },
     });
   </script>
 </dom-module>

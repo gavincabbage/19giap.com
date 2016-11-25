@@ -13,6 +13,8 @@
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-app.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-document.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-storage.html">
 
 <link rel="import" href="shared-styles.html"></link>
 <link rel="import" href="custom-icons.html"></link>
@@ -20,12 +22,6 @@
 <dom-module id="main-app">
   <template>
     <style include="shared-styles">
-      :host {
-        --app-primary-color: #9A070B;
-        --app-secondary-color: black;
-        --app-drawer-width: 180px;
-        display: block;
-      }
 
       app-header {
         color: #fff;
@@ -80,10 +76,11 @@
     </style>
 
     <firebase-app
+      name="19giap"
       auth-domain="giap-80ec2.firebaseapp.com"
       database-url="https://giap-80ec2.firebaseio.com"
       api-key="AIzaSyBvWg_JPft53Qn_-FaSpim-P9tNnjzJeus"
-      storage-bucket="giap-80ec2.appspot.com">
+      storag-bucket="giap-80ec2.appspot.com">
     </firebase-app>
     <firebase-auth
       id="auth"
@@ -118,7 +115,7 @@
         <app-header condenses reveals effects="waterfall">
           <app-toolbar>
             <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
-            <div main-title>19.GIAP</div>
+            <div main-title class="serif">19.GIAP</div>
             <spacer></spacer>
             <div hidden$="[[signedIn]]">
               <a href="/login" title="Sign In" tabindex="-1">
@@ -134,7 +131,7 @@
                 <paper-icon-button class="header-icon" icon="icons:account-circle"></paper-icon-button>
               </a>
               <div class="header-option-group">
-                <a class="header-option" href="#" title="Profile" tabindex="-1">Profile</a>
+                <a class="header-option" href="#" title="Profile" tabindex="-1">{{user.email}}</a>
                 <a class="header-option" title="Sign Out" tabindex="-1" on-tap="signOut">Sign Out</a>
               </div>
             </div>
