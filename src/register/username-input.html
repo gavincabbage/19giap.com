@@ -1,0 +1,70 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-document.html">
+
+<link rel="import" href="../util/custom-validator.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="username-input">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+    </style>
+
+    <div class="form-block">
+      <custom-validator
+        id="usernameValidator"
+        validator-name="usernameValidator">
+      </custom-validator>
+      <paper-input
+        id="usernameInput"
+        is="iron-input"
+        label="username"
+        error-message="[[errorMessage]]"
+        value="{{username}}"
+        validator="usernameValidator"
+        auto-validate required>
+      </paper-input>
+      <div class="form-input-desc">exclude squad tags</div>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'username-input',
+
+      properties: {
+        username: {
+          type: String,
+          notify: true
+        },
+        roster: {
+          type: Object,
+          notify: true
+        },
+        errorMessage: {
+          type: String,
+          value: 'required'
+        }
+      },
+
+      ready: function() {
+        this.$.usernameValidator.validate = this._validateUsername.bind(this);
+      },
+
+      _validateUsername: function() {
+        for (user in this.roster) {
+          if (this.username === this.roster[user].username) {
+            this.errorMessage = 'username already taken';
+            return false;
+          }
+        }
+        this.errorMessage = 'required';
+        return true;
+      }
+
+    });
+  </script>
+</dom-module>

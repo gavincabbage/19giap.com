@@ -1,7 +1,7 @@
-<link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/polymerfire/firebase-document.html">
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-document.html">
 
-<link rel="import" href="shared-styles.html">
+<link rel="import" href="../shared-styles.html">
 
 <dom-module id="roster-page">
   <template>
@@ -35,7 +35,7 @@
     </firebase-query>
 
     <div class="card">
-      <h1 id="header">Roster</h1>
+      <h1 id="header" class="serif">Roster</h1>
       <template is="dom-repeat" items="[[flattenRoster(roster)]]">
         <div class="card">
           username: {{item.username}}

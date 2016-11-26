@@ -14,6 +14,7 @@
 <link rel="import" href="../bower_components/polymerfire/firebase-app.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-document.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-query.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-storage.html">
 
 <link rel="import" href="shared-styles.html"></link>
@@ -80,10 +81,12 @@
       auth-domain="giap-80ec2.firebaseapp.com"
       database-url="https://giap-80ec2.firebaseio.com"
       api-key="AIzaSyBvWg_JPft53Qn_-FaSpim-P9tNnjzJeus"
-      storag-bucket="giap-80ec2.appspot.com">
+      storage-bucket="giap-80ec2.appspot.com">
     </firebase-app>
+
     <firebase-auth
       id="auth"
+      app-name="19giap"
       user="{{user}}"
       signed-in="{{signedIn}}">
     </firebase-auth>
@@ -101,11 +104,11 @@
       <app-drawer>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
           <a class="drawer-option" id="home" name="home" href="/home">Home</a>
+          <a class="drawer-option" name="forum" href="#">Recruitment</a>
+          <a class="drawer-option" name="forum" href="#">Register</a>
           <a class="drawer-option" name="about" href="#">About Us</a>
           <a class="drawer-option" name="roster" href="/roster">Roster</a>
-          <a class="drawer-option" name="forum" href="#">Forum</a>
-          <a class="drawer-option" name="view-1" href="/view-1">View One</a>
-          <a class="drawer-option" name="view-2" href="/view-2">View Two</a>
+          <a class="drawer-option" name="forum" href="#">Resources</a>
         </iron-selector>
       </app-drawer>
 
@@ -144,14 +147,13 @@
             attr-for-selected="name"
             fallback-selection="error-404"
             role="main-app">
-          <home-page id="home" name="home"></home-page>
-          <login-page id="login" name="login"
+          <home-page id="homePage" name="home"></home-page>
+          <login-page id="loginPage" name="login"
               user="{{user}}" signed-in="{{signedIn}}"></login-page>
-          <register-page id="register" name="register"
+          <register-page id="registerPage" name="register"
             user="{{user}}" signed-in="{{signedIn}}"></register-page>
-          <roster-page id="roster" name="roster" route={{subroute}}></roster-page>
+          <roster-page id="rosterPage" name="roster" route={{subroute}}></roster-page>
           <view-1 id="view1" signed-in="[[signedIn]]" name="view-1"></view-1>
-          <view-2 name="view-2"></view-2>
           <error-404 name="error-404"></error-404>
         </iron-pages>
       </app-header-layout>
@@ -199,7 +201,13 @@
       },
 
       _pageChanged: function(page) {
-        var resolvedPageUrl = this.resolveUrl(page + '.html');
+        var url;
+        if (page.indexOf('error') === -1) {
+          url = page + '/' + page + '-page.html';
+        } else {
+          url = 'error/' + page + '.html';
+        }
+        var resolvedPageUrl = this.resolveUrl(url);
         this.importHref(resolvedPageUrl, null, this._showPage404, true);
       },
 

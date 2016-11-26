@@ -3,7 +3,6 @@
   "shell": "src/main-app.html",
   "fragments": [
     "src/view-1.html",
-    "src/view-2.html",
     "src/error-404.html"
   ],
   "sourceGlobs": [

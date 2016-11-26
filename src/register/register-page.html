@@ -1,0 +1,217 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input-container.html">
+<link rel="import" href="../../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../../bower_components/iron-input/iron-input.html">
+<link rel="import" href="../../bower_components/iron-a11y-keys/iron-a11y-keys.html">
+<link rel="import" href="../../bower_components/gold-email-input/gold-email-input.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-app.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-auth.html">
+
+<link rel="import" href="../util/custom-validator.html">
+<link rel="import" href="../util/confirm-input.html">
+<link rel="import" href="../shared-styles.html">
+<link rel="import" href="username-input.html">
+
+<dom-module id="register-page">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+      }
+      .file-input {
+      	width: 0.1px;
+      	height: 0.1px;
+      	opacity: 0;
+      	overflow: hidden;
+      	position: absolute;
+      	z-index: -1;
+      }
+    </style>
+
+    <firebase-auth
+      id="auth"
+      app-name="19giap"
+      user="{{user}}"
+      signed-in="{{signedIn}}">
+    </firebase-auth>
+
+    <firebase-query
+      id="query"
+      app-name="19giap"
+      path="/users"
+      data="{{roster}}">
+    </firebase-query>
+
+    <firebase-document
+      id="document"
+      app-name="19giap">
+    </firebase-document>
+
+    <firebase-storage
+      id="storage"
+      app-name="19giap">
+    </firebase-storage>
+
+    <div class="card">
+
+      <h1 class="serif">Register</h1>
+      <p>
+        Join the 19th Guards website to access our web communications and get
+        involved with the unit. If you're considering membership, this is a good first step.
+        Welcome!
+      </p>
+
+      <iron-a11y-keys id="register-a11y" target="[[_form]]" keys="enter"
+          on-keys-pressed="registerNewUser"></iron-a11y-keys>
+      <form id="registerForm" is="iron-form" name="registerForm">
+
+        <div hidden$="[[hideErrorMessage]]" class="form-error">[[errorMessage]]</div>
+
+        <username-input id="usernameInput" username={{username}} roster=[[roster]]></username-input>
+
+        <div class="form-block" id="avatar-button">
+          <label for="fileInput" class="form-button file-input-label">
+            <iron-icon icon="icons:file-upload"></iron-icon>
+            [[fileText]]
+          </label>
+          <input type="file" name="fileInput" id="fileInput" class="file-input" on-change="updateFileText">
+        </div>
+
+        <confirm-input
+          id="email-input"
+          confirm-value={{email}}
+          input-label="email">
+        </confirm-input>
+
+        <confirm-input
+          id="password-input"
+          confirm-value={{password}}
+          input-label="password"
+          requirements="min. six characters"
+          is-password>
+        </confirm-input>
+
+        <div id="register-buttons" class="form-button-group">
+          <paper-button class="form-button" id="register-submit" on-click="registerNewUser">Submit</paper-button>
+        </div>
+
+      </form>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'register-page',
+
+      properties: {
+        email: String,
+        password: String,
+        avatarFilename: String,
+        user: {
+          type: Object,
+          notify: true
+        },
+        roster: {
+          type: Object,
+          notify: true
+        },
+        signedIn: {
+          type: Boolean,
+          notify: true
+        },
+        username: {
+          type: String,
+          notify: true
+        },
+        hideErrorMessage: {
+          type: Boolean,
+          value: true
+        },
+        errorMessage: {
+          type: String,
+          value: ''
+        },
+        fileText: {
+          type: String,
+          value: 'Upload an avatar'
+        },
+        _form: {
+          type: Object,
+          value: function() {
+            return this.$.registerForm;
+          }
+        }
+      },
+
+      updateFileText: function() {
+        var file = this.$.fileInput.files[0];
+        if (file) {
+          this.fileText = file.name;
+        } else {
+          this.fileText = 'Upload an avatar';
+        }
+      },
+
+      registerNewUser: function() {
+        this._resetError();
+        if (this.$.registerForm.validate()) {
+          var registerPage = this;
+          this.$.auth.createUserWithEmailAndPassword(this.email, this.password)
+          .then(function(newUser) {
+            registerPage.uploadAvatar(newUser.uid);
+          }, function(error) {
+            console.error('problem creating user', error);
+            if (error.code === 'auth/email-already-in-use' || error.code === 'auth/invalid-email') {
+              registerPage._setError('Email already taken or invalid.');
+            } else if (error.code === 'auth/weak-password') {
+              registerPage._setError('Password too weak. Please try again.');
+            } else {
+              registerPage._setError('There was a problem. Please try again.');
+            }
+          });
+        } else {
+          this._setError('Please correct the errors below.');
+        }
+      },
+
+      uploadAvatar: function(uid) {
+        var avatarFile = this.$.fileInput.files[0];
+        var registerPage = this;
+        if (avatarFile) {
+          this.$.storage.path = '/avatars/' + uid;
+          this.$.storage._uploadFile(avatarFile)
+          .then(function(response) {
+            registerPage.createUserRecord(response, uid);
+          }, function(error) {
+            console.error('problem uploading avatar', error);
+          });
+        } else {
+          this.createUserRecord(uid);
+        }
+      },
+
+      createUserRecord: function(url, uid) {
+        var userRecord = {
+          role: 'User',
+          username: this.username,
+          avatarUrl: url
+        }
+        this.$.document.data = userRecord;
+        this.$.document.save('/users', uid);
+      },
+
+      _setError: function(msg) {
+        this.errorMessage = msg;
+        this.hideErrorMessage = false;
+      },
+
+      _resetError: function() {
+        this.hideErrorMessage = true;
+        this.errorMessage = '';
+      }
+
+    });
+  </script>
+</dom-module>

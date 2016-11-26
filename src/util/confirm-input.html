@@ -1,0 +1,100 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/iron-input/iron-input.html">
+
+<link rel="import" href="../shared-styles.html">
+<link rel="import" href="custom-validator.html">
+
+<dom-module id="confirm-input">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+    </style>
+
+    <div class="form-block">
+      <custom-validator
+        id="confirmValidator"
+        validator-name="confirmValidator">
+      </custom-validator>
+      <paper-input
+        id="input1"
+        auto-validate required
+        is="iron-input"
+        type="{{inputType}}"
+        label="{{inputLabel}}"
+        value="{{confirmValue}}"
+        error-message="[[errorMessage1]]"
+        validator="confirmValidator">
+      </paper-input>
+      <div class="form-input-desc">{{requirements}}</div>
+      <paper-input
+        id="input2"
+        auto-validate required
+        is="iron-input"
+        type="{{inputType}}"
+        label="confirm {{inputLabel}}"
+        value="{{otherValue}}"
+        error-message="[[errorMessage2]]"
+        validator="confirmValidator">
+      </paper-input>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'confirm-input',
+
+      properties: {
+        confirmValue: {
+          type: String,
+          reflectToAttribute: true,
+          notify: true
+        },
+        otherValue: {
+          type: String,
+          notify: true
+        },
+        inputLabel: String,
+        errorMessage1: {
+          type: String,
+          value: 'required'
+        },
+        errorMessage2: {
+          type: String,
+          value: 'required'
+        },
+        isPassword: Boolean,
+        requirements: String,
+        inputType: {
+          type: String,
+          computed: '_computeInputType(isPassword)'
+        }
+      },
+
+      ready: function() {
+        this.$.confirmValidator.validate = this._validate.bind(this);
+      },
+
+      _validate: function() {
+        if (this.confirmValue !== this.otherValue) {
+          this.errorMessage1 =
+              this.inputLabel ? this.inputLabel + 's must match' : 'values must match';
+          this.errorMessage2 = '';
+          return false;
+        }
+        this.errorMessage1 = 'required';
+        this.errorMessage2 = 'required';
+        this.$.input1.invalid = false;
+        this.$.input2.invalid = false;
+        return true;
+      },
+
+      _computeInputType: function(isPassword) {
+        return isPassword ? 'password' : 'text';
+      }
+
+    });
+  </script>
+</dom-module>
