@@ -28,6 +28,13 @@
       	position: absolute;
       	z-index: -1;
       }
+
+      @media screen and (max-width: 768px) {
+        #avatar-button {
+          padding-top: 10px;
+          text-align: center;
+        }
+      }
     </style>
 
     <firebase-auth
@@ -72,7 +79,7 @@
         <username-input id="usernameInput" username={{username}} roster=[[roster]]></username-input>
 
         <div class="form-block" id="avatar-button">
-          <label for="fileInput" class="form-button file-input-label">
+          <label for="fileInput" class="form-button">
             <iron-icon icon="icons:file-upload"></iron-icon>
             [[fileText]]
           </label>

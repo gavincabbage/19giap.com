@@ -74,6 +74,11 @@
         margin-top: 2px;
       }
 
+      img.header-avatar {
+        height: 48px;
+        width: 48px;
+      }
+
     </style>
 
     <firebase-app
@@ -91,6 +96,18 @@
       signed-in="{{signedIn}}">
     </firebase-auth>
 
+    <firebase-document
+      id="query"
+      app-name="19giap"
+      path="/users/[[user.uid]]"
+      data="{{userData}}">
+    </firebase-document>
+
+    <firebase-storage
+      id="storage"
+      app-name="19giap">
+    </firebase-storage>
+
     <app-location route="{{route}}"></app-location>
     <app-route
         route="{{route}}"
@@ -104,11 +121,11 @@
       <app-drawer>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
           <a class="drawer-option" id="home" name="home" href="/home">Home</a>
-          <a class="drawer-option" name="forum" href="#">Recruitment</a>
-          <a class="drawer-option" name="forum" href="#">Register</a>
-          <a class="drawer-option" name="about" href="#">About Us</a>
+          <a class="drawer-option" name="about" href="/about">About</a>
+          <a class="drawer-option" name="register" href="/register">Register</a>
           <a class="drawer-option" name="roster" href="/roster">Roster</a>
-          <a class="drawer-option" name="forum" href="#">Resources</a>
+          <a class="drawer-option" name="comms" href="/comms">Communications</a>
+          <a class="drawer-option" name="resources" href="/resources">Resources</a>
         </iron-selector>
       </app-drawer>
 
@@ -131,10 +148,10 @@
             </div>
             <div hidden$="[[!signedIn]]">
               <a href="/login" title="Profile" tabindex="-1">
-                <paper-icon-button class="header-icon" icon="icons:account-circle"></paper-icon-button>
+                <img class="header-avatar" src="[[userData.avatarUrl]]">
               </a>
               <div class="header-option-group">
-                <a class="header-option" href="#" title="Profile" tabindex="-1">{{user.email}}</a>
+                <a class="header-option" href="#" title="Profile" tabindex="-1">{{userData.username}}</a>
                 <a class="header-option" title="Sign Out" tabindex="-1" on-tap="signOut">Sign Out</a>
               </div>
             </div>

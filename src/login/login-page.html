@@ -2,7 +2,6 @@
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/iron-form/iron-form.html">
 <link rel="import" href="../../bower_components/iron-a11y-keys/iron-a11y-keys.html">
-<link rel="import" href="../../bower_components/gold-email-input/gold-email-input.html">
 <link rel="import" href="../../bower_components/polymerfire/firebase-app.html">
 <link rel="import" href="../../bower_components/polymerfire/firebase-auth.html">
 
@@ -32,13 +31,13 @@
                   on-keys-pressed="signIn"></iron-a11y-keys>
       <form id="loginForm" is="iron-form" name="login-form">
 
-        <gold-email-input
+        <paper-input
           name="email"
           auto-validate required
           label="email"
           value={{email}}
           error-message="required">
-        </gold-email-input>
+        </paper-input>
 
         <paper-input
           name="password"

@@ -8,16 +8,19 @@
     <style include="shared-styles">
       :host {
         display: block;
-
         padding: 10px;
+      }
+      .roster-avatar {
+        height: 128px;
+        width: 128px;
       }
     </style>
 
     <app-route
-        route="{{route}}"
-        pattern="/:user"
-        data="{{routeData}}"
-        tail="{{subroute}}">
+      route="{{route}}"
+      pattern="/:user"
+      data="{{routeData}}"
+      tail="{{subroute}}">
     </app-route>
 
     <firebase-document
@@ -27,22 +30,16 @@
       data="{{roster}}">
     </firebase-document>
 
-    <firebase-query
-      id="query"
-      app-name="19giap"
-      path="/users"
-      data="{{roster}}">
-    </firebase-query>
-
     <div class="card">
-      <h1 id="header" class="serif">Roster</h1>
-      <template is="dom-repeat" items="[[flattenRoster(roster)]]">
-        <div class="card">
-          username: {{item.username}}
-        </div>
-      </template>
-      <!-- two elements here: roster-list and user-profile, show
-        one or the other based on presence of routeData.user -->
+      <h1 class="serif">Roster</h1>
+    </div>
+    <template is="dom-repeat" items="[[flattenRoster(roster)]]">
+      <div class="card">
+        <img class="roster-avatar" src="[[item.avatarUrl]]">
+        username: {{item.username}}
+      </div>
+    </template>
+
     </div>
   </template>
 
@@ -67,23 +64,13 @@
             flat.push({
               uid: user,
               username: roster[user].username,
-              role: roster[user].role
+              role: roster[user].role,
+              avatarUrl: roster[user].avatarUrl
             });
           }
           return flat;
         }
 
-
-      // ready: function() {
-      //   var app = firebase.app('19giap');
-      //   console.log(app);
-      //   var database = app.database();
-      //   var results = database.ref('/users')
-      //       .once('value')
-      //       .then(function(snapshot) {
-      //         console.log(snapshot.val());
-      //       });
-      // },
     });
   </script>
 </dom-module>
