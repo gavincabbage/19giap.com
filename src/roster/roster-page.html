@@ -2,23 +2,20 @@
 <link rel="import" href="../../bower_components/polymerfire/firebase-document.html">
 
 <link rel="import" href="../shared-styles.html">
+<link rel="import" href="roster-list-page.html">
+<link rel="import" href="profile-page.html">
 
 <dom-module id="roster-page">
   <template>
     <style include="shared-styles">
       :host {
         display: block;
-        padding: 10px;
-      }
-      .roster-avatar {
-        height: 128px;
-        width: 128px;
       }
     </style>
 
     <app-route
       route="{{route}}"
-      pattern="/:user"
+      pattern="/:uid"
       data="{{routeData}}"
       tail="{{subroute}}">
     </app-route>
@@ -30,17 +27,24 @@
       data="{{roster}}">
     </firebase-document>
 
-    <div class="card">
-      <h1 class="serif">Roster</h1>
-    </div>
-    <template is="dom-repeat" items="[[flattenRoster(roster)]]">
-      <div class="card">
-        <img class="roster-avatar" src="[[item.avatarUrl]]">
-        username: {{item.username}}
-      </div>
-    </template>
-
-    </div>
+    <iron-pages
+      id="rosterPages"
+      selected="[[page]]"
+      attr-for-selected="name"
+      role="roster-page">
+      <roster-list-page
+        id="rosterList"
+        name="rosterList"
+        roster="[[roster]]"
+        uid={{routeData.uid}}>
+      </roster-list-page>
+      <profile-page
+        id="profilePage"
+        name="profilePage"
+        roster="[[roster]]"
+        uid="[[routeData.uid]]">
+      </profile-page>
+    </iron-pages>
   </template>
 
   <script>
@@ -48,6 +52,10 @@
       is: 'roster-page',
 
       properties: {
+        page: {
+          type: String,
+          notify: true
+        },
         route: {
           type: String,
           reflectToAttribute: true
@@ -58,18 +66,13 @@
         }
       },
 
-      flattenRoster: function(roster) {
-          var flat = [];
-          for (user in roster) {
-            flat.push({
-              uid: user,
-              username: roster[user].username,
-              role: roster[user].role,
-              avatarUrl: roster[user].avatarUrl
-            });
-          }
-          return flat;
-        }
+      observers: [
+        '_routeChanged(route)'
+      ],
+
+      _routeChanged: function(route) {
+        this.page = route.path ? 'profilePage' : 'rosterList';
+      }
 
     });
   </script>

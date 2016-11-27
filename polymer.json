@@ -2,8 +2,6 @@
   "entrypoint": "index.html",
   "shell": "src/main-app.html",
   "fragments": [
-    "src/view-1.html",
-    "src/error-404.html"
   ],
   "sourceGlobs": [
    "src/**/*",

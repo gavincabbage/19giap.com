@@ -11,12 +11,19 @@
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-icons/hardware-icons.html">
+<link rel="import" href="../bower_components/iron-media-query/iron-media-query.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-app.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-document.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-query.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-storage.html">
 
+<link rel="import" href="error/error-404.html"></link>
+<link rel="import" href="home/home-page.html"></link>
+<link rel="import" href="login/login-page.html"></link>
+<link rel="import" href="roster/roster-page.html"></link>
+<link rel="import" href="register/register-page.html"></link>
 <link rel="import" href="shared-styles.html"></link>
 <link rel="import" href="custom-icons.html"></link>
 
@@ -79,7 +86,32 @@
         width: 48px;
       }
 
+      a.main-title {
+        color: #fff;
+      }
+
+      a.main-title:visited {
+        color: #fff;
+      }
+
+      a paper-icon-button {
+        color: #ffffff;
+      }
+
+      a:visited paper-icon-button {
+        color: #ffffff;
+      }
+
     </style>
+
+    <iron-media-query
+      query="(max-width: 414px)"
+      query-matches="{{isMobile}}">
+    </iron-media-query>
+    <iron-media-query
+      query="(max-width: 640px)"
+      query-matches="{{isTablet}}">
+    </iron-media-query>
 
     <firebase-app
       name="19giap"
@@ -119,6 +151,10 @@
     <app-drawer-layout fullbleed>
       <!-- Drawer content -->
       <app-drawer>
+        <div hidden$=[[!isTablet]]>
+          <paper-icon-button hidden$=[[!isTablet]] class="float-right"
+              icon="hardware:keyboard-arrow-left" drawer-toggle></paper-icon-button>
+        </div>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
           <a class="drawer-option" id="home" name="home" href="/home">Home</a>
           <a class="drawer-option" name="about" href="/about">About</a>
@@ -134,24 +170,24 @@
 
         <app-header condenses reveals effects="waterfall">
           <app-toolbar>
-            <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
-            <div main-title class="serif">19.GIAP</div>
+            <paper-icon-button icon="icons:menu" drawer-toggle></paper-icon-button>
+            <a main-title href="/home" title="Home" class="serif main-title">19.GIAP</div>
             <spacer></spacer>
             <div hidden$="[[signedIn]]">
               <a href="/login" title="Sign In" tabindex="-1">
                 <paper-icon-button class="header-icon" icon="icons:account-circle"></paper-icon-button>
               </a>
-              <div class="header-option-group">
+              <div hidden$=[[isMobile]] class="header-option-group">
                 <a class="header-option" href="/login" title="Sign In" tabindex="-1">Login</a>
                 <a class="header-option" href="/register" title="Register" tabindex="-1">Register</a>
               </div>
             </div>
             <div hidden$="[[!signedIn]]">
-              <a href="/login" title="Profile" tabindex="-1">
+              <a href="/roster/[[user.uid]]" title="Profile" tabindex="-1">
                 <img class="header-avatar" src="[[userData.avatarUrl]]">
               </a>
-              <div class="header-option-group">
-                <a class="header-option" href="#" title="Profile" tabindex="-1">{{userData.username}}</a>
+              <div hidden$=[[isMobile]] class="header-option-group">
+                <a class="header-option" href="/roster/[[user.uid]]" title="Profile" tabindex="-1">{{userData.username}}</a>
                 <a class="header-option" title="Sign Out" tabindex="-1" on-tap="signOut">Sign Out</a>
               </div>
             </div>
@@ -160,17 +196,17 @@
         </app-header>
 
         <iron-pages
-            selected="[[page]]"
-            attr-for-selected="name"
-            fallback-selection="error-404"
-            role="main-app">
+          id="ironPages"
+          selected="[[page]]"
+          attr-for-selected="name"
+          fallback-selection="error-404"
+          role="main-app">
           <home-page id="homePage" name="home"></home-page>
           <login-page id="loginPage" name="login"
               user="{{user}}" signed-in="{{signedIn}}"></login-page>
           <register-page id="registerPage" name="register"
             user="{{user}}" signed-in="{{signedIn}}"></register-page>
           <roster-page id="rosterPage" name="roster" route={{subroute}}></roster-page>
-          <view-1 id="view1" signed-in="[[signedIn]]" name="view-1"></view-1>
           <error-404 name="error-404"></error-404>
         </iron-pages>
       </app-header-layout>
@@ -190,8 +226,7 @@
         },
         page: {
           type: String,
-          reflectToAttribute: true,
-          observer: '_pageChanged'
+          reflectToAttribute: true
         }
       },
 
@@ -215,22 +250,8 @@
 
       _routePageChanged: function(page) {
         this.page = page || 'home';
-      },
-
-      _pageChanged: function(page) {
-        var url;
-        if (page.indexOf('error') === -1) {
-          url = page + '/' + page + '-page.html';
-        } else {
-          url = 'error/' + page + '.html';
-        }
-        var resolvedPageUrl = this.resolveUrl(url);
-        this.importHref(resolvedPageUrl, null, this._showPage404, true);
-      },
-
-      _showPage404: function() {
-        this.page = 'error-404';
       }
+
     });
   </script>
 </dom-module>

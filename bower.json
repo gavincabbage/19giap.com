@@ -22,7 +22,8 @@
     "paper-button": "PolymerElements/paper-button#^1.0.14",
     "iron-elements": "^1.0.10",
     "paper-elements": "^1.0.7",
-    "polymerfire": "locomuco/polymerfire#polymerfire-storage-api"
+    "polymerfire": "locomuco/polymerfire#polymerfire-storage-api",
+    "google-youtube": "^1.2.1"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"

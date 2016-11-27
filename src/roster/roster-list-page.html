@@ -1,0 +1,130 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="roster-list-page">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+      }
+      .roster-info {
+        text-align: right;
+      }
+      .roster-subtext {
+        font-size: 10pt;
+        color: black;
+        display: block;
+      }
+      .roster-button {
+        margin: 58px 0px 0px 10px;
+      }
+      .roster-avatar {
+        height: 128px;
+        width: 128px;
+        vertical-align: bottom;
+      }
+
+      @media screen and (max-width: 768px) {
+        .roster-button {
+          font-size: 12px;
+          margin-top: 30px;
+        }
+        .roster-avatar {
+          height: 96px;
+          width: 96px;
+        }
+      }
+
+      @media screen and (max-width: 414px) {
+        .roster-avatar {
+          height: 64px;
+          width: 64px;
+        }
+        .roster-button {
+          margin-top: 10px;
+        }
+        .roster-button-text {
+          display: none;
+        }
+        .roster-username {
+          font-size: 12px;
+        }
+        .roster-subtext {
+          display: none;
+        }
+        paper-button.form-button {
+          border: none;
+          padding: 0;
+          margin: 0;
+        }
+        paper-button.form-button:hover {
+          background-color: unset;
+          color: unset;
+        }
+      }
+    </style>
+
+    <div class="card">
+      <h1 class="serif">Roster</h1>
+    </div>
+    <template is="dom-repeat" items="[[_flattenRoster(roster)]]">
+      <div id="{{item.uid}}" class="card">
+        <a href="/roster/{{item.uid}}">
+          <img class="roster-avatar" src="[[item.avatarUrl]]">
+        </a>
+        <div class="float-right roster-info">
+          <div class="roster-text">
+              <a class="roster-username" href="/roster/{{item.uid}}">{{item.username}}</a>
+              <span class="roster-subtext">{{item.role}}</span>
+          </div>
+          <div class="roster-buttons">
+            <a class="roster-button float-right" href="/roster/{{item.uid}}" title="View Profile" tabindex="-1">
+              <paper-button class="form-button" id="login-register">
+                <iron-icon icon="icons:account-circle"></iron-icon>
+                <span class="roster-button-text"> Profile</span>
+              </paper-button>
+            </a>
+            <a class="roster-button float-right" href="#" title="Message" tabindex="-1">
+              <paper-button class="form-button" id="login-register">
+                <iron-icon icon="icons:mail"></iron-icon>
+                <span class="roster-button-text"> Message</span>
+              </paper-button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </template>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'roster-list-page',
+
+      properties: {
+        roster: {
+          type: Object,
+          notify: true
+        },
+        uid: {
+          type: Object,
+          notify: true
+        }
+      },
+
+      _flattenRoster: function(roster) {
+        var flat = [];
+        for (user in roster) {
+          flat.push({
+            uid: user,
+            username: roster[user].username,
+            role: roster[user].role,
+            avatarUrl: roster[user].avatarUrl
+          });
+        }
+        return flat;
+      },
+    });
+  </script>
+</dom-module>

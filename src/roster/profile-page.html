@@ -1,0 +1,77 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-icons/hardware-icons.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="profile-page">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+      }
+      img.profile-avatar {
+        height: 228px;
+        width: 228px;
+      }
+      div.button-gutter {
+        margin-top: 24px;
+      }
+      @media screen and (max-width: 768px) {
+        img.profile-avatar {
+          height: 156px;
+          width: 156px;
+        }
+      }
+
+      @media screen and (max-width: 414px) {
+        img.profile-avatar {
+          height: 96px;
+          width: 96px;
+        }
+        h1.profile-username {
+          font-size: 16px;
+        }
+      }
+    </style>
+
+    <div class="card">
+      <img class="profile-avatar" src="[[userData.avatarUrl]]">
+      <h1 class="profile-username serif float-right">[[userData.username]]</h1>
+      <div class="button-gutter">
+        <a href="/roster" title="Back" tabindex="-1">
+          <paper-button class="form-button" id="profile">Back</paper-button>
+        </a>
+        <a class="float-right" href="#" title="View Profile" tabindex="-1">
+          <paper-button class="form-button" id="profile2">Message</paper-button>
+        </a>
+      </div>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'profile-page',
+
+      properties: {
+        uid: String,
+        roster: Object,
+        userData: {
+          type: Object,
+          computed: '__computeUserData(uid, roster)'
+        }
+      },
+
+      __computeUserData: function(uid, roster) {
+        if (typeof roster[uid] !== 'undefined') {
+          var userData = roster[uid];
+          userData.uid = uid;
+          return userData;
+        } else {
+          return null;
+        }
+      }
+    });
+  </script>
+</dom-module>
