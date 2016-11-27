@@ -207,6 +207,7 @@
         }
         this.$.document.data = userRecord;
         this.$.document.save('/users', uid);
+        window.location = '/home';
       },
 
       _setError: function(msg) {
