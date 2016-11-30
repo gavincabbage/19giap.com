@@ -29,6 +29,10 @@
       	z-index: -1;
       }
 
+      .file-input-label + label * {
+	       pointer-events: none;
+       }
+
       @media screen and (max-width: 768px) {
         #avatar-button {
           padding-top: 10px;
@@ -79,7 +83,7 @@
         <username-input id="usernameInput" username={{username}} roster=[[roster]]></username-input>
 
         <div class="form-block" id="avatar-button">
-          <label for="fileInput" class="form-button">
+          <label for="fileInput" class="form-button file-input-label">
             <iron-icon icon="icons:file-upload"></iron-icon>
             [[fileText]]
           </label>
@@ -109,6 +113,8 @@
   </template>
 
   <script>
+    const DEFAULT_AVATAR_URL = 'https://firebasestorage.googleapis.com/v0/b/giap-80ec2.appspot.com/o/avatars%2Fstalin.jpeg?alt=media&token=127601d5-2972-47dc-8cb2-fa77e322a2e4';
+
     Polymer({
       is: 'register-page',
 
@@ -195,7 +201,7 @@
             console.error('problem uploading avatar', error);
           });
         } else {
-          this.createUserRecord(uid);
+          this.createUserRecord(null, uid);
         }
       },
 
@@ -203,7 +209,7 @@
         var userRecord = {
           role: 'User',
           username: this.username,
-          avatarUrl: url
+          avatarUrl: url ? url : DEFAULT_AVATAR_URL
         }
         this.$.document.data = userRecord;
         this.$.document.save('/users', uid);

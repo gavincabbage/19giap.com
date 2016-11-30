@@ -97,7 +97,7 @@
         if (this.$.loginForm.validate()) {
           this.$.auth.signInWithEmailAndPassword(this.email, this.password)
           .then(function() {
-            window.location = '/home';
+            loginPage.domHost.page = 'home';
           }, function(error) {
             console.log('second');
             loginPage.hideErrorMessage = false;
